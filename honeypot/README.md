@@ -1,16 +1,25 @@
-## Honeypot Starter Template
+## SSH Honeypot
 
-This directory is a starter template for the honeypot portion of the assignment.
+This honeypot simulates an SSH service (port 22 in-container) using Paramiko. It does NOT provide a real shell.
+Instead, it emulates a minimal interactive prompt to capture attacker behavior safely.
 
-### What you need to implement
-- Choose a protocol (SSH, HTTP, or multi-protocol).
-- Simulate a convincing service banner and responses.
-- Log connection metadata, authentication attempts, and attacker actions.
-- Store logs under `logs/` and include an `analysis.md` summary.
-- Update `honeypot.py` and `logger.py` (and add modules as needed) to implement the honeypot.
+### What it logs (JSON lines)
+- Connection metadata: source IP/port, timestamps, session duration
+- Authentication attempts: username/password (each try)
+- Commands typed in the fake shell (one event per command)
+- Alerts:
+  - `alert_bruteforce` when an IP reaches >=5 failed logins within 60 seconds
 
-### Getting started
-1. Implement your honeypot logic in `honeypot.py`.
-2. Wire logging in `logger.py` and record results in `logs/`.
-3. Summarize your findings in `analysis.md`.
-4. Run from the repo root with `docker-compose up honeypot`.
+Logs are written to: `logs/honeypot.log`
+
+### Why it’s convincing
+- Presents an OpenSSH-like banner (configurable)
+- Shows a realistic Ubuntu MOTD + last login line
+- Provides a prompt and plausible responses for common recon commands
+
+### Run
+From repo root:
+```bash
+docker compose up --build -d honeypot
+
+```

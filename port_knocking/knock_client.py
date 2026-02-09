@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Starter template for the port knocking client."""
+"""Port knocking client (UDP knocks + optional protected-port check)."""
 
 import argparse
 import socket
@@ -10,27 +10,24 @@ DEFAULT_PROTECTED_PORT = 2222
 DEFAULT_DELAY = 0.3
 
 
-def send_knock(target, port, delay):
-    """Send a single knock to the target port."""
-    # TODO: Choose UDP or TCP knocks based on your design.
-    # Example TCP knock stub:
+def send_knock_udp(target: str, port: int, delay: float) -> None:
+    """Send a single UDP knock to the target port."""
     try:
-        with socket.create_connection((target, port), timeout=1.0):
-            pass
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+            s.sendto(b"knock", (target, port))
     except OSError:
         pass
     time.sleep(delay)
 
 
-def perform_knock_sequence(target, sequence, delay):
+def perform_knock_sequence(target: str, sequence: list[int], delay: float) -> None:
     """Send the full knock sequence."""
     for port in sequence:
-        send_knock(target, port, delay)
+        send_knock_udp(target, port, delay)
 
 
-def check_protected_port(target, protected_port):
+def check_protected_port(target: str, protected_port: int) -> None:
     """Try connecting to the protected port after knocking."""
-    # TODO: Replace with real service connection if needed.
     try:
         with socket.create_connection((target, protected_port), timeout=2.0):
             print(f"[+] Connected to protected port {protected_port}")
@@ -39,18 +36,18 @@ def check_protected_port(target, protected_port):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Port knocking client starter")
+    parser = argparse.ArgumentParser(description="Port knocking client")
     parser.add_argument("--target", required=True, help="Target host or IP")
     parser.add_argument(
         "--sequence",
         default=",".join(str(port) for port in DEFAULT_KNOCK_SEQUENCE),
-        help="Comma-separated knock ports",
+        help="Comma-separated knock ports (UDP knocks)",
     )
     parser.add_argument(
         "--protected-port",
         type=int,
         default=DEFAULT_PROTECTED_PORT,
-        help="Protected service port",
+        help="Protected service port (TCP)",
     )
     parser.add_argument(
         "--delay",
@@ -61,7 +58,7 @@ def parse_args():
     parser.add_argument(
         "--check",
         action="store_true",
-        help="Attempt connection to protected port after knocking",
+        help="Attempt TCP connection to protected port after knocking",
     )
     return parser.parse_args()
 

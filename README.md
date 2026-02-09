@@ -1,5 +1,8 @@
 # Assignment 2: Network Security
 
+## Important
+Each part of the assignmet (i.e. in each folder for each part) there is a README.md document describing what the code is doing and how I finished the assignment (look at that for detailed review)
+
 ## Overview
 
 This assignment focuses on network security, service discovery, man-in-the-middle (MITM) attacks, and defensive security measures. You will explore a multi-container Docker environment, discover hidden services, intercept network traffic, and implement security fixes.

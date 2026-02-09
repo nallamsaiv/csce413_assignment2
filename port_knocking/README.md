@@ -1,21 +1,33 @@
-## Port Knocking Starter Template
+## Port Knocking Implementation
 
-This directory is a starter template for the port knocking portion of the assignment.
+### What this protects
+- Protected service port: TCP 2222
+- Default state: port 2222 is blocked via iptables (DROP rule)
 
-### What you need to implement
-- Pick a protected service/port (default is 2222).
-- Define a knock sequence (e.g., 1234, 5678, 9012).
-- Implement a server that listens for knocks and validates the sequence.
-- Open the protected port only after a valid sequence.
-- Add timing constraints and reset on incorrect sequences.
-- Implement a client to send the knock sequence.
+### Knock design
+- Knock protocol: UDP
+- Knock sequence: 1234,5678,9012 (configurable)
+- Timing window: 10 seconds to complete the sequence (configurable)
 
-### Getting started
-1. Implement your server logic in `knock_server.py`.
-2. Implement your client logic in `knock_client.py`.
-3. Update `demo.sh` to demonstrate your flow.
-4. Run from the repo root with `docker compose up port_knocking`.
+### How access is granted
+- The server listens on UDP ports in the sequence.
+- It tracks progress per source IP address.
+- When a client completes the sequence within the time window:
+  - the server inserts an iptables rule allowing ONLY that source IP to connect to TCP 2222
+  - the rule is tagged with comment `knock_allow`
+  - the allow rule is removed automatically after 30 seconds (configurable)
 
+### Demo protected service
+- For demonstration, the port_knocking container runs a small TCP service on port 2222.
+- Once the firewall opens, `nc` can successfully connect.
+
+### How to run demo
+From repo root:
+```bash
+docker compose up --build -d port_knocking
+cd port_knocking
+./demo.sh 172.20.0.40
+```
 ### Example usage
 ```bash
 python3 knock_client.py --target 172.20.0.40 --sequence 1234,5678,9012

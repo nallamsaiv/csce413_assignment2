@@ -1,14 +1,11 @@
-## MITM Starter Template
+## MITM
+Tiny script that sniffs TCP traffic on port **3306** (MySQL) and prints the raw payload as readable ASCII (non-printable bytes show as `.`).
 
-This directory is a starter template for the MITM portion of the assignment.
+## Requirements
+- Python 3
+- scapy
 
-### What you need to implement
-- Capture traffic between the web app and database.
-- Analyze packets for sensitive data and explain the impact.
-- Record your findings.
-- Include evidence (pcap files or screenshots) alongside your report.
-
-### Getting started
-1. Run your capture workflow from this directory or the repo root.
-2. Save artifacts (pcap or screenshots) in this folder.
-3. Document everything.
+## Run
+```bash
+sudo python3 sniff_mysql.py
+```
