@@ -1,7 +1,7 @@
 # Assignment 2: Network Security
 
 ## Important
-Each part of the assignmet (i.e. in each folder for each part) there is a README.md document describing what the code is doing and how I finished the assignment (look at that for detailed review)
+Each part of the assignmet (i.e. in each folder for each part) there is a README.md document describing what the code is doing and how I finished the assignment (look at that for more details). There are also a lot of screenshots in each folder labelled as evidence.
 
 ## Overview
 
@@ -587,3 +587,4 @@ For assignment clarifications or questions about requirements, please contact th
 **Good luck, and happy (ethical) hacking!** 🔐🌐
 
 *Remember: With great power comes great responsibility. Use your skills for good.*
+
