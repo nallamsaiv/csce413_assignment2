@@ -1,6 +1,6 @@
 # Port Scanner (TCP Connect)
 
-A simple multi-threaded TCP connect port scanner for authorized lab use.
+A simple multi-threaded TCP connect port scanner for authorized use.
 
 ## Features
 - Scan a single host/hostname/IP or a CIDR block (e.g., `172.20.0.0/24`)
@@ -22,4 +22,5 @@ A simple multi-threaded TCP connect port scanner for authorized lab use.
 ### Scan one host
 ```bash
 python3 -m port_scanner --target 172.20.0.20 --ports 1-10000
+
 ```
