@@ -148,7 +148,7 @@ def guess_service(port: int, banner: str) -> str:
 
 
 def scan_one(host: str, port: int, timeout: float, grab_banner: bool, read_timeout: float) -> PortResult:
-"""Scan a single (host, port) using TCP connect_ex."""
+    """Scan a single (host, port) using TCP connect_ex."""
     start = time.perf_counter()
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(timeout)
@@ -187,7 +187,7 @@ def scan_one(host: str, port: int, timeout: float, grab_banner: bool, read_timeo
 
 
 def scan(hosts: List[str], ports: List[int], threads: int, timeout: float, grab_banner: bool, read_timeout: float) -> List[PortResult]:
-"""Run threaded scans across all hosts/ports."""
+    """Run threaded scans across all hosts/ports."""
     results: List[PortResult] = []
     tasks = []
 
@@ -233,7 +233,7 @@ def print_table(results: List[PortResult], show_closed: bool) -> None:
 
 
 def write_json(results: List[PortResult], path: str) -> None:
-"""Write JSON output file."""
+    """Write JSON output file."""
     with open(path, "w", encoding="utf-8") as f:
         json.dump([asdict(r) for r in results], f, indent=2)
 

@@ -13,4 +13,4 @@ def packet_handler(pkt):
             print(text)
 
 #Sniff MySQL TCP packets on the Docker bridge interface
-sniff(iface="br-a4bc7b4f4e80", filter="tcp port 3306", prn=packet_handler, store=False)
+sniff(iface="br-66cdefd2e216", filter="tcp port 3306", prn=packet_handler, store=False)
